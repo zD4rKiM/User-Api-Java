@@ -1,0 +1,26 @@
+service: user-api-java
+
+provider:
+  name: aws
+  runtime: java23
+  region: eu-west-3
+  environment:
+    DYNAMODB_TABLE: User
+
+functions:
+  createUser:
+    handler: it.test.demo.handler.UserLambdaHandler::createUser
+    events:
+      - http:
+          path: user
+          method: post
+
+  getUserByEmail:
+    handler: it.test.demo.handler.UserLambdaHandler::getUserByEmail
+    events:
+      - http:
+          path: user/{email}
+          method: get
+
+plugins:
+  - serverless-java-aws
